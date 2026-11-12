@@ -10,33 +10,79 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as PerfumesIndexRouteImport } from './routes/perfumes.index'
+import { Route as PerfumesSlugRouteImport } from './routes/perfumes.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarrinhoRoute = CarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfumesIndexRoute = PerfumesIndexRouteImport.update({
+  id: '/perfumes/',
+  path: '/perfumes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfumesSlugRoute = PerfumesSlugRouteImport.update({
+  id: '/perfumes/$slug',
+  path: '/perfumes/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/carrinho': typeof CarrinhoRoute
+  '/historia': typeof HistoriaRoute
+  '/perfumes/$slug': typeof PerfumesSlugRoute
+  '/perfumes/': typeof PerfumesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/carrinho': typeof CarrinhoRoute
+  '/historia': typeof HistoriaRoute
+  '/perfumes/$slug': typeof PerfumesSlugRoute
+  '/perfumes': typeof PerfumesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/carrinho': typeof CarrinhoRoute
+  '/historia': typeof HistoriaRoute
+  '/perfumes/$slug': typeof PerfumesSlugRoute
+  '/perfumes/': typeof PerfumesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/carrinho' | '/historia' | '/perfumes/$slug' | '/perfumes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/carrinho' | '/historia' | '/perfumes/$slug' | '/perfumes'
+  id:
+    | '__root__'
+    | '/'
+    | '/carrinho'
+    | '/historia'
+    | '/perfumes/$slug'
+    | '/perfumes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CarrinhoRoute: typeof CarrinhoRoute
+  HistoriaRoute: typeof HistoriaRoute
+  PerfumesSlugRoute: typeof PerfumesSlugRoute
+  PerfumesIndexRoute: typeof PerfumesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +94,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/carrinho': {
+      id: '/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof CarrinhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfumes/': {
+      id: '/perfumes/'
+      path: '/perfumes'
+      fullPath: '/perfumes/'
+      preLoaderRoute: typeof PerfumesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfumes/$slug': {
+      id: '/perfumes/$slug'
+      path: '/perfumes/$slug'
+      fullPath: '/perfumes/$slug'
+      preLoaderRoute: typeof PerfumesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CarrinhoRoute: CarrinhoRoute,
+  HistoriaRoute: HistoriaRoute,
+  PerfumesSlugRoute: PerfumesSlugRoute,
+  PerfumesIndexRoute: PerfumesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

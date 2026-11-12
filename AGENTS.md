@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Perfume catalog is static data in `src/lib/perfumes.ts`; routes read from it — keeps the catalog in one place until a payment/product backend exists.
+- Cart lives client-side (`src/lib/cart.tsx`, localStorage) with pure math in `src/lib/cart-logic.ts` covered by tests — keeps logic testable and SSR-safe.
+- All colors/gradients come from tokens and `@utility` helpers in `src/styles.css`; buttons use the `gold`/`luxe` variants — no hardcoded colors in components.
